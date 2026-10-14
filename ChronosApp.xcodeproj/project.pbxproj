@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		CF7B6285307EC32A00727116 /* SwiftDataStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF7B6284307EC32100727116 /* SwiftDataStorage.swift */; };
 		CF7B6287307EC35700727116 /* CoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF7B6286307EC35000727116 /* CoreData.swift */; };
+		CF80DBF0307F805B000EC2B0 /* PhotoStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF80DBEF307F8058000EC2B0 /* PhotoStorage.swift */; };
 		CFBAE498307A4BC000D154FF /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFBAE493307A4BC000D154FF /* ContentView.swift */; };
 		CFBAE499307A4BC000D154FF /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFBAE494307A4BC000D154FF /* Enums.swift */; };
 		CFBAE49A307A4BC000D154FF /* Homework.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFBAE495307A4BC000D154FF /* Homework.swift */; };
@@ -22,6 +23,7 @@
 		CF5ADB8C307CDA040011B005 /* JSONStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONStorage.swift; sourceTree = "<group>"; };
 		CF7B6284307EC32100727116 /* SwiftDataStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftDataStorage.swift; sourceTree = "<group>"; };
 		CF7B6286307EC35000727116 /* CoreData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreData.swift; sourceTree = "<group>"; };
+		CF80DBEF307F8058000EC2B0 /* PhotoStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoStorage.swift; sourceTree = "<group>"; };
 		CF8AA5DF3073F881001C0C30 /* ChronosApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ChronosApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CFBAE493307A4BC000D154FF /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		CFBAE494307A4BC000D154FF /* Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
@@ -51,6 +53,7 @@
 		CF5ADB8B307CD9FB0011B005 /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				CF80DBEF307F8058000EC2B0 /* PhotoStorage.swift */,
 				CF7B6286307EC35000727116 /* CoreData.swift */,
 				CF7B6284307EC32100727116 /* SwiftDataStorage.swift */,
 				CF5ADB8C307CDA040011B005 /* JSONStorage.swift */,
@@ -175,6 +178,7 @@
 				CFBAE498307A4BC000D154FF /* ContentView.swift in Sources */,
 				CFBAE4A4307A57F400D154FF /* AddHomeworkView.swift in Sources */,
 				CFBAE4A6307A63AB00D154FF /* DetailView.swift in Sources */,
+				CF80DBF0307F805B000EC2B0 /* PhotoStorage.swift in Sources */,
 				CFF3E15F307EBCB900892847 /* JSONStorage.swift in Sources */,
 				CF7B6287307EC35700727116 /* CoreData.swift in Sources */,
 				CFBAE499307A4BC000D154FF /* Enums.swift in Sources */,

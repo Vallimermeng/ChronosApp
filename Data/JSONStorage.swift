@@ -7,7 +7,7 @@
 import Foundation
 
 struct JSONStorage{
-    //если че я по англ пишу комм
+    
     
     func saveToJSONFile(homeworks: [Homework]){
         do{

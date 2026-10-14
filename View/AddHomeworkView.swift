@@ -6,6 +6,8 @@
 //
 
 import SwiftUI
+import PhotosUI
+import UIKit
 
 struct AddHomeworkView: View{
     var viewModel: ScheduleViewModel
@@ -17,6 +19,9 @@ struct AddHomeworkView: View{
     @State private var status: HomeworkStatus = .notStarted
     @State private var inputWeek: Int = 1
     @State private var inputSubmissionWeek: Int = 1
+    
+    @State private var selectedItem: [PhotosPickerItem] = []
+    @State private var loadedImage: [Data] = []
     
     var body: some View{
         
@@ -70,6 +75,23 @@ struct AddHomeworkView: View{
             }
             Divider()
             
+            
+            PhotosPicker("Приложите фото", selection: $selectedItem, matching: .images)
+            
+            
+            ForEach(loadedImage, id:\.self){newImage in
+                if let uiImage = UIImage(data: newImage) {
+                    Image(uiImage: uiImage)
+                        .resizable()
+                        .frame(width: 150, height: 200)
+                        .scaledToFit()
+                }
+                
+                
+            }
+            
+            
+            Divider()
             Button("Сохранить"){
                 viewModel.addHomework(homework: Homework(name: inputName, description: inputDescription, day: day, status: status, week: inputWeek, submissionWeek: inputSubmissionWeek))
                 dismiss()
@@ -77,10 +99,26 @@ struct AddHomeworkView: View{
             .padding()
             
             
+            
         }
-        
+        .onChange(of: selectedItem) {
+            Task {
+                if (!loadedImage.isEmpty){
+                    loadedImage.removeAll()
+                }
+                for item in selectedItem{
+                    
+                    if let data = try? await item.loadTransferable(type: Data.self){
+                        loadedImage.append(data)
+                        
+                    }
+                }
+            }
+            
+        }
     }
 }
+    
 
 
 #Preview {

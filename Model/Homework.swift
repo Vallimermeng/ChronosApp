@@ -16,5 +16,5 @@ struct Homework: Identifiable, Codable{
     var submissionWeek: Int
     
     var id: UUID = UUID()
-    var photoIDs: UUID = UUID()
+    var photoIDs: [UUID] = []
 }

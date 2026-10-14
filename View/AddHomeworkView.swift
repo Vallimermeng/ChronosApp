@@ -11,6 +11,7 @@ import UIKit
 
 struct AddHomeworkView: View{
     var viewModel: ScheduleViewModel
+    private let photoStorage = PhotoStorage()
     @Environment(\.dismiss) var dismiss
     
     @State private var inputName: String = ""
@@ -83,7 +84,7 @@ struct AddHomeworkView: View{
                 if let uiImage = UIImage(data: newImage) {
                     Image(uiImage: uiImage)
                         .resizable()
-                        .frame(width: 150, height: 200)
+                        .frame(width: 100, height: 150)
                         .scaledToFit()
                 }
                 
@@ -92,9 +93,24 @@ struct AddHomeworkView: View{
             
             
             Divider()
+            
             Button("Сохранить"){
-                viewModel.addHomework(homework: Homework(name: inputName, description: inputDescription, day: day, status: status, week: inputWeek, submissionWeek: inputSubmissionWeek))
-                dismiss()
+                var photoIDs: [UUID] = []
+                do{
+                    for dataImage in loadedImage {
+                        let photoID = try photoStorage.savePhoto(data: dataImage)
+                        
+                        photoIDs.append(photoID)
+                        
+                        
+                    }
+                    
+                    viewModel.addHomework(homework: Homework(name: inputName, description: inputDescription, day: day, status: status, week: inputWeek, submissionWeek: inputSubmissionWeek, photoIDs: photoIDs))
+                    dismiss()
+                    
+                }catch{
+                    print(error)
+                }
             }
             .padding()
             

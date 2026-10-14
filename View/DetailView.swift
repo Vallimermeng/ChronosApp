@@ -6,15 +6,15 @@
 //
 
 import SwiftUI
+import UIKit
 
 struct DetailView: View{
     @Environment(\.dismiss) var dismiss
     var homework: Homework
     var viewModel: ScheduleViewModel
+    private var photoStorage = PhotoStorage()
     
     private var currentHomework: Homework{ viewModel.homeworks.first(where: {$0.id == homework.id}) ?? homework}
-    
-    
     
     
     private var statusBinding: Binding<HomeworkStatus>{
@@ -28,15 +28,6 @@ struct DetailView: View{
         )
     }
     
-    @State private var isEditing: Bool = false
-    
-    
-    @State private var inputName: String = ""
-    @State private var inputDescription: String = ""
-    @State private var day: Day = .monday
-    @State private var inputWeek: Int = 1
-    @State private var inputSubmissionWeek: Int = 1
-    
     private var statusColor: Color{
         switch currentHomework.status{
             
@@ -49,10 +40,24 @@ struct DetailView: View{
         }
     }
     
+    
+    
+    @State private var isEditing: Bool = false
+    
+    
+    @State private var inputName: String = ""
+    @State private var inputDescription: String = ""
+    @State private var day: Day = .monday
+    @State private var inputWeek: Int = 1
+    @State private var inputSubmissionWeek: Int = 1
+    
+    
+    @State private var loadedImages: [UIImage] = []
+    
+    
     var body: some View{
         
         VStack{
-            
             
             if(!isEditing){
                 Text(currentHomework.name)
@@ -84,6 +89,16 @@ struct DetailView: View{
                     .font(.subheadline)
                 Text("Неделя сдачи: \(currentHomework.submissionWeek)")
                     .font(.subheadline)
+                
+                
+                ForEach(loadedImages.indices, id:\.self){ index in
+                    Image(uiImage: loadedImages[index])
+                            .resizable()
+                            .scaledToFit()
+                            .frame(maxHeight: 250)
+                }
+                
+                
                 
                 
                 Button("Редактировать"){
@@ -159,7 +174,7 @@ struct DetailView: View{
                     Divider()
                     
                     Button("Сохранить"){
-                        viewModel.editHomework(homeworkID: currentHomework.id, homework: Homework(name: inputName, description: inputDescription, day: day, status: currentHomework.status, week: inputWeek, submissionWeek: inputSubmissionWeek, id: currentHomework.id))
+                        viewModel.editHomework(homeworkID: currentHomework.id, homework: Homework(name: inputName, description: inputDescription, day: day, status: currentHomework.status, week: inputWeek, submissionWeek: inputSubmissionWeek, id: currentHomework.id, photoIDs: currentHomework.photoIDs))
                         isEditing = false
                     }
                     
@@ -170,10 +185,20 @@ struct DetailView: View{
                 }
                 
             }
+        
             
-            
-            
-            
+        }.task{
+            loadedImages.removeAll()
+            for photoId in currentHomework.photoIDs {
+                do{
+                    let id = try photoStorage.loadPhoto(id: photoId)
+                    if let uiImage = UIImage(data: id){
+                        loadedImages.append(uiImage)
+                    }
+                }catch{
+                    print(error)
+                }
+            }
         }
         
     }

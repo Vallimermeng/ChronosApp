@@ -30,7 +30,7 @@ struct PhotoStorage{
         guard let firstURL = urls.first else{
             throw CocoaError(.fileNoSuchFile)
         }
-        let fileURL = firstURL.appendingPathComponent("\(id).png")
+        let fileURL = firstURL.appendingPathComponent("\(id.uuidString).png")
         let data = try Data(contentsOf: fileURL)
         
         return data
@@ -42,7 +42,7 @@ struct PhotoStorage{
         guard let firstURL = urls.first else{
             throw CocoaError(.fileNoSuchFile)
         }
-        let deleteURL = firstURL.appendingPathComponent("\(id).png")
+        let deleteURL = firstURL.appendingPathComponent("\(id.uuidString).png")
         if FileManager.default.fileExists(atPath: deleteURL.path) {
                 try FileManager.default.removeItem(at: deleteURL)
             } else {

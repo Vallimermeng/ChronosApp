@@ -27,9 +27,6 @@ struct ContentView: View {
                         
                     }
                     .opacity(week == viewModel.selectedWeek ? 1.0 : 0.5)
-                    
-                    
-                    
                 }
                 .font(.title)
                 .foregroundColor(.white)
@@ -67,12 +64,7 @@ struct ContentView: View {
                         AddHomeworkView(viewModel: viewModel)
                     .presentationDetents([.medium, .fraction(0.55), .height(400)])
                     }
-            
-            
         }
-        
-        
-        
         Spacer()
         
         ScrollView{
@@ -139,18 +131,8 @@ struct ContentView: View {
                                 .presentationDetents([.medium, .fraction(0.55), .height(330)])
                             
                         }
-                        
-                        
                     }
-                    
-                    
-                    
-                    
                 }
-                
-                
-                
-                
             }
             .padding()
             

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CF7AD5613081401000E5260E /* PhotoPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF7AD5603081400C00E5260E /* PhotoPickerView.swift */; };
 		CF7B6285307EC32A00727116 /* SwiftDataStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF7B6284307EC32100727116 /* SwiftDataStorage.swift */; };
 		CF7B6287307EC35700727116 /* CoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF7B6286307EC35000727116 /* CoreData.swift */; };
 		CF80DBF0307F805B000EC2B0 /* PhotoStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF80DBEF307F8058000EC2B0 /* PhotoStorage.swift */; };
@@ -21,6 +22,7 @@
 
 /* Begin PBXFileReference section */
 		CF5ADB8C307CDA040011B005 /* JSONStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONStorage.swift; sourceTree = "<group>"; };
+		CF7AD5603081400C00E5260E /* PhotoPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoPickerView.swift; sourceTree = "<group>"; };
 		CF7B6284307EC32100727116 /* SwiftDataStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftDataStorage.swift; sourceTree = "<group>"; };
 		CF7B6286307EC35000727116 /* CoreData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreData.swift; sourceTree = "<group>"; };
 		CF80DBEF307F8058000EC2B0 /* PhotoStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoStorage.swift; sourceTree = "<group>"; };
@@ -93,6 +95,7 @@
 		CFBAE49F307A4E3700D154FF /* View */ = {
 			isa = PBXGroup;
 			children = (
+				CF7AD5603081400C00E5260E /* PhotoPickerView.swift */,
 				CFBAE4A5307A63A600D154FF /* DetailView.swift */,
 				CFBAE4A3307A57ED00D154FF /* AddHomeworkView.swift */,
 				CFBAE493307A4BC000D154FF /* ContentView.swift */,
@@ -182,6 +185,7 @@
 				CFF3E15F307EBCB900892847 /* JSONStorage.swift in Sources */,
 				CF7B6287307EC35700727116 /* CoreData.swift in Sources */,
 				CFBAE499307A4BC000D154FF /* Enums.swift in Sources */,
+				CF7AD5613081401000E5260E /* PhotoPickerView.swift in Sources */,
 				CFBAE4A2307A524700D154FF /* ScheduleViewModel.swift in Sources */,
 				CF7B6285307EC32A00727116 /* SwiftDataStorage.swift in Sources */,
 				CFBAE49A307A4BC000D154FF /* Homework.swift in Sources */,

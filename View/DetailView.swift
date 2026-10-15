@@ -53,7 +53,7 @@ struct DetailView: View{
     @State private var inputWeek: Int = 1
     @State private var inputSubmissionWeek: Int = 1
     
-    @State private var selectedItem: [PhotosPickerItem] = []
+    
     @State private var loadedImage: [Data] = []
     @State private var loadedImages: [UIImage] = []
     
@@ -102,10 +102,6 @@ struct DetailView: View{
                 }
                 
                 
-                
-                
-                
-                
                 Button("Редактировать"){
                     isEditing.toggle()
                     inputName = currentHomework.name
@@ -139,7 +135,7 @@ struct DetailView: View{
                 }
             }
             
-            //BAD - code repeatability from AddHomeworkView (TODO: FIX)
+            
             if(isEditing){
                 VStack{
                     TextField("Название", text: $inputName)
@@ -199,17 +195,9 @@ struct DetailView: View{
                     }
                     
                     
-                    PhotosPicker("Добавить фото", selection: $selectedItem)
+                    PhotoPickerView(loadedImage: $loadedImage)
                     
-                    ForEach(loadedImage, id:\.self){newImage in
-                        if let uiImage = UIImage(data: newImage) {
-                            Image(uiImage: uiImage)
-                                .resizable()
-                                .frame(width: 100, height: 150)
-                                .scaledToFit()
-                        }
-                        
-                    }
+                    
                     
                     
                     
@@ -242,18 +230,6 @@ struct DetailView: View{
         
             
         }
-        
-        .onChange(of: selectedItem){
-            loadedImage.removeAll()
-            Task{
-                for item in selectedItem{
-                    if let data = try? await item.loadTransferable(type: Data.self){
-                        loadedImage.append(data)
-                    }
-                }
-            }
-        }
-        
         
         .task{
             loadedImages.removeAll()

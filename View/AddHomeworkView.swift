@@ -77,7 +77,7 @@ struct AddHomeworkView: View{
             Divider()
             
             
-            PhotosPicker("Приложите фото", selection: $selectedItem, matching: .images)
+            PhotosPicker("Приложить фото", selection: $selectedItem, matching: .images)
             
             
             ForEach(loadedImage, id:\.self){newImage in

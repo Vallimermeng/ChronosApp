@@ -7,15 +7,18 @@
 
 import SwiftUI
 import UIKit
+import PhotosUI
 
 struct DetailView: View{
+    
     @Environment(\.dismiss) var dismiss
     var homework: Homework
     var viewModel: ScheduleViewModel
     private var photoStorage = PhotoStorage()
     
-    private var currentHomework: Homework{ viewModel.homeworks.first(where: {$0.id == homework.id}) ?? homework}
     
+    
+    private var currentHomework: Homework{ viewModel.homeworks.first(where: {$0.id == homework.id}) ?? homework}
     
     private var statusBinding: Binding<HomeworkStatus>{
         Binding(
@@ -44,14 +47,14 @@ struct DetailView: View{
     
     @State private var isEditing: Bool = false
     
-    
     @State private var inputName: String = ""
     @State private var inputDescription: String = ""
     @State private var day: Day = .monday
     @State private var inputWeek: Int = 1
     @State private var inputSubmissionWeek: Int = 1
     
-    
+    @State private var selectedItem: [PhotosPickerItem] = []
+    @State private var loadedImage: [Data] = []
     @State private var loadedImages: [UIImage] = []
     
     
@@ -101,6 +104,8 @@ struct DetailView: View{
                 
                 
                 
+                
+                
                 Button("Редактировать"){
                     isEditing.toggle()
                     inputName = currentHomework.name
@@ -113,7 +118,20 @@ struct DetailView: View{
                 
                 Button("Удалить ДЗ"){
                     viewModel.deleteHomework(homeworkID: currentHomework.id)
+            
                     dismiss()
+                }
+                
+                Button("Удалить все фото"){
+                    for photoId in currentHomework.photoIDs {
+                        do{
+                            try photoStorage.deletePhoto(id: photoId)
+                        }catch{
+                            print(error)
+                        }
+                    }
+                    
+                    viewModel.editHomework(homeworkID: currentHomework.id, homework: Homework(name: inputName, description: inputDescription, day: day, status: currentHomework.status, week: inputWeek, submissionWeek: inputSubmissionWeek, id: currentHomework.id, photoIDs: []))
                 }
                 
                 Button("Отмена"){
@@ -173,9 +191,45 @@ struct DetailView: View{
                     }
                     Divider()
                     
+                    ForEach(loadedImages.indices, id:\.self){ index in
+                        Image(uiImage: loadedImages[index])
+                                .resizable()
+                                .scaledToFit()
+                                .frame(maxHeight: 250)
+                    }
+                    
+                    
+                    PhotosPicker("Добавить фото", selection: $selectedItem)
+                    
+                    ForEach(loadedImage, id:\.self){newImage in
+                        if let uiImage = UIImage(data: newImage) {
+                            Image(uiImage: uiImage)
+                                .resizable()
+                                .frame(width: 100, height: 150)
+                                .scaledToFit()
+                        }
+                        
+                    }
+                    
+                    
+                    
+                    Divider()
+                    
                     Button("Сохранить"){
-                        viewModel.editHomework(homeworkID: currentHomework.id, homework: Homework(name: inputName, description: inputDescription, day: day, status: currentHomework.status, week: inputWeek, submissionWeek: inputSubmissionWeek, id: currentHomework.id, photoIDs: currentHomework.photoIDs))
-                        isEditing = false
+                        var photoIDs: [UUID] = []
+                        photoIDs.append(contentsOf: currentHomework.photoIDs)
+                        do{
+                            for dataImage in loadedImage {
+                                let photoID = try photoStorage.savePhoto(data: dataImage)
+                                
+                                photoIDs.append(photoID)
+                            }
+                            
+                            viewModel.editHomework(homeworkID: currentHomework.id, homework: Homework(name: inputName, description: inputDescription, day: day, status: currentHomework.status, week: inputWeek, submissionWeek: inputSubmissionWeek, id: currentHomework.id, photoIDs: photoIDs))
+                            isEditing = false
+                        }catch{
+                            print(error)
+                        }
                     }
                     
                     Button("Отмена"){
@@ -187,7 +241,21 @@ struct DetailView: View{
             }
         
             
-        }.task{
+        }
+        
+        .onChange(of: selectedItem){
+            loadedImage.removeAll()
+            Task{
+                for item in selectedItem{
+                    if let data = try? await item.loadTransferable(type: Data.self){
+                        loadedImage.append(data)
+                    }
+                }
+            }
+        }
+        
+        
+        .task{
             loadedImages.removeAll()
             for photoId in currentHomework.photoIDs {
                 do{
@@ -201,7 +269,10 @@ struct DetailView: View{
             }
         }
         
+        
+        
     }
+
     
     
 }
